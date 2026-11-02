@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>InvoicePilot for Contractors</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<main>
+  <h1>InvoicePilot for Contractors</h1>
+  <p class="intro">Paste a timesheet. Get an invoice, a PayPal send, payment tracking, and a follow-up draft.</p>
+  <div id="mode" class="banner">Checking status...</div>
+
+  <section>
+    <h2>1. Timesheet to invoice</h2>
+    <label>Timesheet (one line per day, with hours)
+      <textarea id="timesheet" rows="5">Mon Nov 2: 8 hours, Snowflake pipeline work
+Tue Nov 3: 7.5 hours, dbt model updates</textarea>
+    </label>
+    <div class="row">
+      <label>Client <input id="client" value="Acme"></label>
+      <label>Rate ($/hour) <input id="rate" type="number" value="85" step="0.01"></label>
+      <label>Due in (days) <input id="due_days" type="number" value="15"></label>
+    </div>
+    <label>Client PayPal email (optional, used for a real sandbox send)
+      <input id="recipient_email" placeholder="billing@client.com">
+    </label>
+    <button id="create">Create and send invoice</button>
+    <pre id="create_out" class="out"></pre>
+  </section>
+
+  <section>
+    <h2>2. Invoices</h2>
+    <button id="refresh_list">Refresh list</button>
+    <button id="refresh_status">Refresh status from PayPal</button>
+    <label>Invoice id <input id="status_id" value="INV-001"></label>
+    <pre id="list_out" class="out"></pre>
+  </section>
+
+  <section>
+    <h2>3. Ask about a payment</h2>
+    <label>Question <input id="question" value="has client Acme paid invoice INV-001"></label>
+    <button id="ask">Ask</button>
+    <pre id="ask_out" class="out"></pre>
+  </section>
+
+  <section>
+    <h2>4. Follow-up draft</h2>
+    <div class="row">
+      <label>Invoice id <input id="followup_id" value="INV-001"></label>
+      <label>Tone
+        <select id="tone">
+          <option value="polite">Polite nudge</option>
+          <option value="firm">Firm reminder</option>
+        </select>
+      </label>
+    </div>
+    <button id="followup">Draft follow-up</button>
+    <pre id="followup_out" class="out"></pre>
+  </section>
+
+  <p class="note">Invoice math is done in code, never by the model. PayPal and AI modes are labeled on every result, so a mock send or a local fallback is never presented as a real one.</p>
+</main>
+<script src="/static/app.js"></script>
+</body>
+</html>
