@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Local credentials and runtime state (never commit these)
+.env
+*.env
+*.pem
+*.key
+
+# Local test and server logs
+*.log
+
+# Editor and OS files
+.DS_Store
+.idea/
+.vscode/
+
+# Keep the sample data in data/ (INV-001). Runtime invoices created by
+# the demo land in the same files, which is fine: they contain no secrets.
