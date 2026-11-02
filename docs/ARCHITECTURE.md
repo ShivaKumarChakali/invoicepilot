@@ -101,8 +101,12 @@ are resolved as follows:
   `SandboxPayPalClient` (OAuth 2.0 client credentials, Invoicing API v2:
   create draft, send, get status), picked by `get_client()` when
   `PAYPAL_CLIENT_ID` and `PAYPAL_CLIENT_SECRET` are set. It is tested
-  against a local stub PayPal server in `test_invoicepilot.py`. A live
-  sandbox call still needs Shiva's sandbox credentials.
+  against a local stub PayPal server in `test_invoicepilot.py`, and
+  verified live against the PayPal sandbox on Nov 2, 2026 (a real
+  sandbox invoice created and sent, status SENT confirmed by refresh).
+  Two live-test findings are fixed in the client: sandbox create
+  returns 201 with only a self link, so the invoice id is now taken
+  from the link, and sending requires a recipient email.
 - AI step: `ai.py` adds a Meta Model API client (Muse Spark) plus a
   local fallback. Model lines are verified against the source text and
   totals are recomputed in code. Invoice math never comes from the model.
@@ -116,8 +120,7 @@ are resolved as follows:
 - Tests: `test_invoicepilot.py`, 36 checks, all passing.
 - License: MIT `LICENSE` at the top of the folder. `.gitignore` covers
   pycache, env files, and logs, and keeps the sample data.
-- Still to do before submitting: live sandbox test with Shiva's
-  credentials, and the demo video under 3 minutes on YouTube.
+- Still to do before submitting: the demo video under 3 minutes on YouTube.
 
 ## Gaps and TODOs (original, Oct 26, kept for reference)
 
