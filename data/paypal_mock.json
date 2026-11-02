@@ -1,0 +1,96 @@
+{
+  "records": {
+    "MOCK-EF8247FC": {
+      "mock_paypal_id": "MOCK-EF8247FC",
+      "invoice": {
+        "invoice_id": "INV-001",
+        "client": "Acme",
+        "rate_per_hour": 85.0,
+        "lines": [
+          {
+            "hours": 8.0,
+            "description": "Snowflake pipeline work"
+          },
+          {
+            "hours": 7.5,
+            "description": "dbt model updates"
+          }
+        ],
+        "total_hours": 15.5,
+        "total": 1317.5,
+        "currency": "USD",
+        "status": "DRAFT",
+        "created_date": "2026-11-02",
+        "due_date": "2026-11-17",
+        "due_days": 15
+      },
+      "status": "SENT"
+    },
+    "MOCK-A4CC272D": {
+      "mock_paypal_id": "MOCK-A4CC272D",
+      "invoice": {
+        "invoice_id": "INV-003",
+        "client": "Delta",
+        "rate_per_hour": 90.0,
+        "lines": [
+          {
+            "hours": 4.0,
+            "description": "API integration work"
+          }
+        ],
+        "total_hours": 4.0,
+        "total": 360.0,
+        "currency": "USD",
+        "status": "DRAFT",
+        "created_date": "2026-11-02",
+        "due_date": "2026-11-17",
+        "due_days": 15
+      },
+      "status": "SENT"
+    },
+    "MOCK-3D1A9890": {
+      "mock_paypal_id": "MOCK-3D1A9890",
+      "invoice": {
+        "invoice_id": "INV-003",
+        "client": "Delta",
+        "rate_per_hour": 90.0,
+        "lines": [
+          {
+            "hours": 4.0,
+            "description": "API integration work"
+          }
+        ],
+        "total_hours": 4.0,
+        "total": 360.0,
+        "currency": "USD",
+        "status": "DRAFT",
+        "created_date": "2026-11-02",
+        "due_date": "2026-11-17",
+        "due_days": 15
+      },
+      "status": "SENT"
+    },
+    "MOCK-B3B565F9": {
+      "mock_paypal_id": "MOCK-B3B565F9",
+      "invoice": {
+        "invoice_id": "INV-003",
+        "client": "Delta",
+        "rate_per_hour": 90.0,
+        "lines": [
+          {
+            "hours": 4.0,
+            "description": "API integration work"
+          }
+        ],
+        "total_hours": 4.0,
+        "total": 360.0,
+        "currency": "USD",
+        "status": "DRAFT",
+        "created_date": "2026-11-02",
+        "due_date": "2026-11-17",
+        "due_days": 15
+      },
+      "status": "SENT"
+    }
+  }
+}

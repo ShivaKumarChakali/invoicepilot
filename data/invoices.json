@@ -1,0 +1,26 @@
+[
+  {
+    "invoice_id": "INV-001",
+    "client": "Acme",
+    "rate_per_hour": 85.0,
+    "lines": [
+      {
+        "hours": 8.0,
+        "description": "Snowflake pipeline work"
+      },
+      {
+        "hours": 7.5,
+        "description": "dbt model updates"
+      }
+    ],
+    "total_hours": 15.5,
+    "total": 1317.5,
+    "currency": "USD",
+    "status": "SENT",
+    "created_date": "2026-11-02",
+    "due_date": "2026-11-17",
+    "due_days": 15,
+    "mock_paypal_id": "MOCK-EF8247FC",
+    "paypal_mode": "mock"
+  }
+]
