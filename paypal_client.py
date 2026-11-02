@@ -214,7 +214,15 @@ class SandboxPayPalClient:
     def create_invoice(self, invoice, recipient_email=None):
         payload = self._invoice_payload(invoice, recipient_email)
         result = self._request("POST", "/v2/invoicing/invoices", payload)
-        return result["id"]
+        # Sandbox create returns 201 with a body that is only the self link,
+        # e.g. {"rel": "self", "href": ".../invoices/INV2-...", "method": "GET"},
+        # plus a Location header. The invoice id is the last path segment.
+        if result.get("id"):
+            return result["id"]
+        href = result.get("href", "")
+        if href:
+            return href.rstrip("/").rsplit("/", 1)[-1]
+        raise RuntimeError("PayPal create invoice returned no id: %r" % (result,))
 
     def send_invoice(self, paypal_id):
         self._request("POST", "/v2/invoicing/invoices/%s/send" % paypal_id, {})

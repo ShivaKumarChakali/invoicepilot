@@ -31,18 +31,18 @@ What is real today:
   overdue flags, status refresh, follow up drafts, payment questions.
 - A real PayPal sandbox client (OAuth 2.0 client credentials, then
   Invoicing API v2: create draft, send, get status). It is built and
-  tested against a local stub server that mimics the PayPal endpoints.
-  A live sandbox call has NOT been made yet, because it needs Shiva's
-  PayPal sandbox Client ID and Secret. Until those are set, the app runs
+  tested against a local stub server that mimics the PayPal endpoints,
+  and verified live against the PayPal sandbox on Nov 2, 2026: a real
+  sandbox invoice was created and sent (status SENT, confirmed by a
+  status refresh from PayPal). Until credentials are set, the app runs
   in mock mode and says so on every result.
 - A real AI step (Meta Model API, Muse Spark) with the same guardrails
   as the model layer in Pipeline Copilot: model proposes, code verifies
   and recomputes. With no key set, the local fallback runs and says so.
 
 What is still to do before submitting:
-- Live PayPal sandbox test with Shiva's credentials.
 - Demo video under 3 minutes on YouTube (required by the PayPal rules).
-- Public repo and Devpost submit by Nov 10 (hard deadline Nov 12,
+- Devpost submit by Nov 10 (hard deadline Nov 12,
   12:00 PM PT). Judging runs Dec 1 to Dec 15, so the demo must keep
   working until then.
 
@@ -112,8 +112,6 @@ draft.
 - `data/invoices.json`: invoice store, with the INV-001 sample.
 - `data/paypal_mock.json`: mock PayPal store, merged by invoice id.
 - `docs/ARCHITECTURE.md`: purpose, data flow, every key function.
-- `SUBMISSION_CHECKLIST.md`: judging rules, what to submit, dates.
-- `SUBMISSION.md`: Devpost submission copy.
 
 ## Tests
 
