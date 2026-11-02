@@ -173,14 +173,31 @@ def followup_draft(invoice_id, tone="polite"):
 
 
 def refresh_status(invoice_id, client=None):
-    """Refresh one invoice's status from the PayPal client and save it."""
+    """Refresh one invoice's status from the PayPal client and save it.
+
+    The id looked up must belong to the current mode: a mock-mode record
+    has no invoice on PayPal's sandbox, and a sandbox record has no mock
+    entry. Mixing them used to send a mock id to PayPal and surface a
+    raw 404, so a mismatch now fails with a plain explanation instead.
+    """
     invoice = find_invoice(invoice_id)
     if invoice is None:
         return None
     client = client or get_client()
-    paypal_id = invoice.get("paypal_invoice_id") or invoice.get("mock_paypal_id")
-    if not paypal_id:
-        return with_overdue(invoice)
+    if client.name == "sandbox":
+        paypal_id = invoice.get("paypal_invoice_id")
+        if not paypal_id:
+            raise ValueError(
+                "Invoice %s was created in mock mode and does not exist in "
+                "the PayPal sandbox. Create a new invoice in sandbox mode "
+                "to check a live status." % invoice_id)
+    else:
+        paypal_id = invoice.get("mock_paypal_id")
+        if not paypal_id:
+            raise ValueError(
+                "Invoice %s was created in the PayPal sandbox and has no "
+                "mock record. Set sandbox credentials to check its live "
+                "status." % invoice_id)
     result = client.get_status(paypal_id)
     invoice["status"] = result["status"]
     if result.get("paid"):

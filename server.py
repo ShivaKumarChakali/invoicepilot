@@ -119,16 +119,27 @@ class Handler(BaseHTTPRequestHandler):
                 return self.send_json({"error": "create failed: %s" % exc}, status=500)
             return self.send_json(result)
         if self.path == "/api/status":
-            invoice = app_mod.refresh_status(payload.get("invoice_id", ""))
+            try:
+                invoice = app_mod.refresh_status(payload.get("invoice_id", ""))
+            except ValueError as exc:
+                return self.send_json({"error": str(exc)}, status=400)
+            except Exception as exc:
+                return self.send_json({"error": "status check failed: %s" % exc}, status=500)
             if invoice is None:
                 return self.send_json({"error": "invoice not found"}, status=404)
             return self.send_json({"invoice": invoice})
         if self.path == "/api/ask":
-            answer = app_mod.answer_payment_query(payload.get("question", ""))
+            try:
+                answer = app_mod.answer_payment_query(payload.get("question", ""))
+            except Exception as exc:
+                return self.send_json({"error": "question failed: %s" % exc}, status=500)
             return self.send_json({"answer": answer})
         if self.path == "/api/followup":
-            draft = app_mod.followup_draft(payload.get("invoice_id", ""),
-                                           payload.get("tone", "polite"))
+            try:
+                draft = app_mod.followup_draft(payload.get("invoice_id", ""),
+                                               payload.get("tone", "polite"))
+            except Exception as exc:
+                return self.send_json({"error": "follow-up failed: %s" % exc}, status=500)
             return self.send_json({"draft": draft})
         return self.send_json({"error": "not found"}, status=404)
 

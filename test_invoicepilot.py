@@ -84,6 +84,31 @@ def main():
     check("paid invoice is not overdue", app_mod.is_overdue(refreshed) is False)
     check("unknown invoice refresh is None", app_mod.refresh_status("INV-999", client=mock) is None)
 
+    # 4b. Mode mismatch fails plainly instead of querying PayPal with a
+    # mock id (the Mac web-demo 404: INV-001 is mock-only, sandbox mode
+    # asked PayPal about its mock id). Dummy creds only; no network call
+    # happens because the mismatch is caught before any API call.
+    from paypal_client import SandboxPayPalClient
+    sandbox_dummy = SandboxPayPalClient(client_id="dummy", client_secret="dummy")
+    try:
+        app_mod.refresh_status("INV-001", client=sandbox_dummy)
+        mode_error = ""
+    except ValueError as exc:
+        mode_error = str(exc)
+    check("mock record in sandbox mode fails plainly",
+          "mock mode" in mode_error, mode_error)
+    sandbox_only = dict(inv2)
+    sandbox_only["paypal_invoice_id"] = "INV2-TEST"
+    sandbox_only.pop("mock_paypal_id", None)
+    app_mod.save_invoice(sandbox_only)
+    try:
+        app_mod.refresh_status("INV-002", client=mock)
+        reverse_error = ""
+    except ValueError as exc:
+        reverse_error = str(exc)
+    check("sandbox record in mock mode fails plainly",
+          "no mock record" in reverse_error, reverse_error)
+
     # 5. Due date and overdue logic
     past = app_mod.build_invoice("Gamma", 100.0, [{"hours": 1.0, "description": "Work"}],
                                  "INV-003", due_days=15, created_date="2026-10-01")
